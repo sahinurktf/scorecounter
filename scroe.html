@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Count Score Now</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+             background-color: #e8eaed;
+             background-image: url('https://images.unsplash.com/photo-1533035353720-f1c6a75cd8ab?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D');
+             background-size: cover;
+             background-position: center;
+             display: flex;
+             justify-content: center;
+             align-items: center;
+             height: 100vh;
+        }
+        .container {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+            padding: 20px;
+            border-radius: 10px; /* Rounded corners */
+            width: 300px; /* Fixed width */
+            max-width: 90%; /* Maximum width */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); /* Black shadow */
+        }
+        h1 {
+            margin: 0 0 20px;
+        }
+        p {
+            margin: 0 0 20px;
+            font-size: 1.1em;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: calc(100% - 22px);
+            margin-bottom: 20px;
+            font-size: 1em;
+        }
+        .score {
+            font-size: 2em;
+            margin: 20px 0;
+        }
+        .buttons {
+            display: flex;
+            justify-content: space-around;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .increment {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .reset {
+            background-color: #f44336;
+            color: white;
+        }
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            font-weight: bold;
+            color: black; /* White text color */
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        footer a {
+            color: black;/* White link color */
+            text-decoration: none;
+            font-weight: bold;
+        }
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            font-weight: bold;
+            color: black; /* White text color */
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        header a {
+            color: blueviolet; /* White link color */
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+   <header>
+    <h1>Score Counter</h1>
+    <p>The "Score Counter" is a simple tool designed to track score of anything .</p>
+  </header>
+    <div class="container">
+        <h1>Score Counter</h1>
+        <p>Keep track of your game scores easily!</p>
+        <input type="text" id="gameName" placeholder="Enter game name here" oninput="saveGameName()">
+        <div class="score" id="score">Score: 0</div>
+        <div class="buttons">
+            <button class="increment" onclick="incrementScore()">Increase Score</button>
+            <button class="reset" onclick="resetScore()">Reset Score</button>
+        </div>
+    </div>
+     <footer>
+        Built by Noim/Kashim 
+    </footer>
+
+    <script>
+        let score = localStorage.getItem('score') ? parseInt(localStorage.getItem('score')) : 0;
+        const scoreElement = document.getElementById('score');
+        const gameNameInput = document.getElementById('gameName');
+        const savedGameName = localStorage.getItem('gameName');
+
+        if (savedGameName) {
+            gameNameInput.value = savedGameName;
+        }
+
+        updateScore();
+
+        function incrementScore() {
+            score++;
+            saveScore();
+            updateScore();
+        }
+
+        function resetScore() {
+            score = 0;
+            saveScore();
+            updateScore();
+        }
+
+        function updateScore() {
+            const gameName = gameNameInput.value;
+            scoreElement.textContent = `${gameName ? gameName + ' ' : ''}Score: ${score}`;
+        }
+
+        function saveScore() {
+            localStorage.setItem('score', score);
+        }
+
+        function saveGameName() {
+            const gameName = gameNameInput.value;
+            localStorage.setItem('gameName', gameName);
+            updateScore();
+        }
+    </script>
+</body>
+</html>
